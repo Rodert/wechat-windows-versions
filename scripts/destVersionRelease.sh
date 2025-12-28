@@ -6,11 +6,11 @@ temp_path="WeChatSetup/temp"
 latest_path="WeChatSetup/latest"
 
 function get_download_link_from_official() {
-    printf "#%.0s" {1..60}
-    echo 
-    echo -e "## \033[1;33mFetching download link from https://pc.weixin.qq.com/\033[0m"
-    printf "#%.0s" {1..60}
-    echo 
+    >&2 printf "#%.0s" {1..60}
+    >&2 echo 
+    >&2 echo -e "## \033[1;33mFetching download link from https://pc.weixin.qq.com/\033[0m"
+    >&2 printf "#%.0s" {1..60}
+    >&2 echo 
     
     # 从官网获取64位版本的下载链接
     local page_content=$(curl -s -L "https://pc.weixin.qq.com/")
@@ -36,6 +36,7 @@ function get_download_link_from_official() {
         return 1
     fi
     
+    # 只输出 URL 到 stdout，其他信息都输出到 stderr
     echo "$link"
 }
 
