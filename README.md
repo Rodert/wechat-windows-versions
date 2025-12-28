@@ -24,4 +24,13 @@
 
 各版本更新日志可参见 [changelog](https://weixin.qq.com/cgi-bin/readtemplate?lang=zh_CN&t=weixin_faq_list&head=true)
 
+## 在线访问
+
+🌐 **GitHub Pages 在线版本下载页面**: 访问仓库的 GitHub Pages（需要在仓库设置中启用）
+
+## 作者信息
+
+- **作者**: 王仕宇 (Wang Shiyu)
+- **自媒体**: [JavaPub](https://github.com/Rodert) | 仕宇2046
+
 *如有问题/侵权，请直接提交 issue 告知。*
