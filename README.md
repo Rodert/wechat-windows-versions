@@ -1,7 +1,12 @@
-# 声明 为了更维护仓库迁移到： https://github.com/Rodert/wechat-win-versions
+# 声明 为了更好的维护历史版本 仓库迁移到 
+
+https://github.com/Rodert/wechat-win-versions
 
 [https://github.com/Rodert/wechat-win-versions](https://github.com/Rodert/wechat-win-versions)
 
+
+
+---
 
 
 ---
