@@ -5,10 +5,50 @@ set -eo pipefail
 temp_path="WeChatSetup/temp"
 latest_path="WeChatSetup/latest"
 
+function get_download_link_from_official() {
+    printf "#%.0s" {1..60}
+    echo 
+    echo -e "## \033[1;33mFetching download link from https://pc.weixin.qq.com/\033[0m"
+    printf "#%.0s" {1..60}
+    echo 
+    
+    # 从官网获取64位版本的下载链接
+    local page_content=$(curl -s -L "https://pc.weixin.qq.com/")
+    if [ $? -ne 0 ]; then
+        >&2 echo -e "\033[1;31mFailed to fetch page from official website!\033[0m"
+        return 1
+    fi
+    
+    # 提取 id="downloadButton" 的 href 属性值（64位版本）
+    # 使用 sed -E 提取，兼容 macOS 和 Linux
+    local link=$(echo "$page_content" | grep 'id="downloadButton"' | sed -E 's/.*id="downloadButton"[^>]*href="([^"]*)".*/\1/' | head -1)
+    
+    if [ -z "$link" ]; then
+        # 备用方案：从文件名构建完整链接
+        local filename=$(echo "$page_content" | grep -o 'WeChatWin_[^"]*\.exe' | head -1)
+        if [ -n "$filename" ]; then
+            link="https://dldir1v6.qq.com/weixin/Universal/Windows/$filename"
+        fi
+    fi
+    
+    if [ -z "$link" ]; then
+        >&2 echo -e "\033[1;31mCould not extract download link from official website!\033[0m"
+        return 1
+    fi
+    
+    echo "$link"
+}
+
+# 获取下载链接
 download_link="$1"
 if [ -z "$1" ]; then
-    >&2 echo -e "Missing argument. Using default download link"
-    download_link="https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe"
+    >&2 echo -e "No download link provided. Fetching from official website..."
+    download_link=$(get_download_link_from_official)
+    if [ -z "$download_link" ]; then
+        >&2 echo -e "\033[1;31mFailed to get download link from official website!\033[0m"
+        exit 1
+    fi
+    >&2 echo -e "Download link: $download_link"
 fi
 
 function install_depends() {

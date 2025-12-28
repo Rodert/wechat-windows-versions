@@ -67,7 +67,7 @@ function main() {
 
     release_info=`awk '!/^$|Sha256/ { $1="*"$1"*";sub("UpdateTime", "CheckTime"); if ( match($2, /https?:\/\/([\w\.\/:])*/) ) $2="[Url]("$2")"; print $0 }' ${temp_path}/release.info | join_lines '%0A' | sed 's/ /%20/g'`
     dest_version=`awk '/DestVersion/ { print $2 }' ${temp_path}/release.info`
-    release_info="$release_info%0A%0A*NotifyFrom:*%20[Github](https://github.com/tom-snow/wechat-windows-versions/releases/tag/v$dest_version)"
+    release_info="$release_info%0A%0A*NotifyFrom:*%20[Github](https://github.com/Rodert/wechat-windows-versions/releases/tag/v$dest_version)"
 
     echo $CHATIDS | sed 's/,/\n/g' > ${temp_path}/chat_ids
     # while IFS="" read -r chatid || [ -n "$chatid" ]
